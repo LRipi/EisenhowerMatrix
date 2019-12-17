@@ -67,19 +67,19 @@ class MatrixPageState extends State<MatrixPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-          new Expanded(
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Button(
+            new Expanded(
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Button(
                   taskList: urgentPasImportant,
-                  color: Colors.orange,
+                    color: Colors.pink,
                 ),
                 new VerticalDivider(width: 1.0),
                 new Button(
                   taskList: urgentImportant,
-                  color: Colors.green,
+                    color: Colors.green,
                 )
               ],
             ),
@@ -92,24 +92,26 @@ class MatrixPageState extends State<MatrixPage> {
               children: <Widget>[
                 new Button(
                   taskList: pasUrgentPasImportant,
-                  color: Colors.blue,
-                ),
-                new VerticalDivider(width: 1.0),
-                new Button(
+                    color: Colors.blue,
+                  ),
+                  new VerticalDivider(width: 1.0),
+                  new Button(
                   taskList: pasUrgentImportant,
-                  color: Colors.yellow,
-                )
-              ],
+                    color: Colors.yellow,
+                  )
+                ],
+              ),
             ),
-          ),
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        tooltip: 'Add item',
+        backgroundColor: Colors.purple,
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }
@@ -129,13 +131,13 @@ class Button extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ExtractTaskListPageArgument (),
-                  settings: RouteSettings(
-                    arguments: TaskListPageArgument (
-                      taskList
-                    ),
-                  )
+                builder: (context) => ExtractTaskListPageArgument (),
+                settings: RouteSettings(
+                  arguments: TaskListPageArgument (
+                    taskList
+                  ),
                 )
+              )
             );
           },
           color: color,

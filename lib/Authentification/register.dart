@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -9,21 +11,42 @@ class _RegisterPageState extends State<RegisterPage>
 {
   final _usernamecontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
+  final _passwordconfirmcontroller = TextEditingController();
+  bool error = false;
   
+  void setError(bool val) {
+    setState(() {
+      error = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold (
       body: Center (
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-              child: TextField(
-                controller: _usernamecontroller,
-                decoration: new InputDecoration(
-                    labelText: "Enter your username",
-                    icon: Icon(Icons.person),
+        child: SingleChildScrollView(
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+                child: TextField(
+                  controller: _usernamecontroller,
+                  decoration: new InputDecoration(
+                      labelText: "Enter your username",
+                      icon: Icon(Icons.person),
+                    ),
+                  )
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _passwordcontroller,
+                  decoration: new InputDecoration(
+                    labelText: "Enter your password",
+                    icon: Icon(Icons.vpn_key),
                   ),
                 )
             ),
@@ -52,7 +75,6 @@ class _RegisterPageState extends State<RegisterPage>
             FlatButton(
               onPressed: () {
                 debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
-                Navigator.pop(context);
               },
               child: Text('Register'),
             ),
@@ -68,21 +90,38 @@ class _RegisterPageState extends State<RegisterPage>
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
                     },
                     child: Text(
                       'Login',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold
+                        color: Theme.of(context).primaryColor,
                       )
                     ),
-                  )
-                ],
-              )
-            ),
-          ], 
-        ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                    )
+                  ],
+                )
+              ),
+            ], 
+          ),
+        )
       )
     );
   }
