@@ -1,17 +1,16 @@
-import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
-import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
-import 'register.dart';
+import 'login.dart';
 
-class LoginPage extends StatelessWidget
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage>
 {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  final VoidCallback onSignIn;
-
-  LoginPage({@required this.onSignIn});
-
+  final _usernamecontroller = TextEditingController();
+  final _passwordcontroller = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold (
@@ -22,7 +21,7 @@ class LoginPage extends StatelessWidget
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextField(
-                controller: _usernameController,
+                controller: _usernamecontroller,
                 decoration: new InputDecoration(
                     labelText: "Enter your username",
                     icon: Icon(Icons.person),
@@ -33,33 +32,36 @@ class LoginPage extends StatelessWidget
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextField(
                 obscureText: true,
-                controller: _passwordController,
+                controller: _passwordcontroller,
                 decoration: new InputDecoration(
                   labelText: "Enter your password",
                   icon: Icon(Icons.vpn_key),
                 ),
               )
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+              child: TextField(
+                obscureText: true,
+                controller: _passwordcontroller,
+                decoration: new InputDecoration(
+                  labelText: "Confirm your password",
+                  icon: Icon(Icons.vpn_key),
+                ),
+              )
+            ),
             FlatButton(
               onPressed: () {
-                debugPrint('Username: ' + _usernameController.text + '\nPassword: ' + _passwordController.text);
-                /*Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatrixPage()),
-                );
-                */
-                print("should put new status to connected");
-                Authentication.setAuthState(AuthState.connected);
-                onSignIn();
+                debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
               },
-              child: Text('Login'),
+              child: Text('Register'),
             ),
             Padding(
               padding: EdgeInsets.only(top: 50.0),
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Not registered yet ?',
+                    'You already have an account ?',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     )
@@ -68,11 +70,11 @@ class LoginPage extends StatelessWidget
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
-                      'Register',
+                      'Login',
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold
@@ -82,7 +84,7 @@ class LoginPage extends StatelessWidget
                 ],
               )
             ),
-          ],
+          ], 
         ),
       )
     );
