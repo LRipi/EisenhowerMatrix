@@ -5,6 +5,11 @@ import 'package:eisenhower_matrix/task_list_page.dart';
 
 class ApiCalls {
 
+  static Future<void> updateAmountFromTaskLists(TaskListInfo info) async {
+    info.amount = 5;
+    //return info;
+  }
+
   //TODO link to API
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
     List<Task> result = new List<Task> ();

@@ -1,17 +1,62 @@
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/custom_drawer.dart';
+import 'package:eisenhower_matrix/task_list_page.dart';
 import 'package:flutter/material.dart';
 
-class MatrixPage extends StatelessWidget {
-
+class MatrixPage extends StatefulWidget {
   final VoidCallback onSignOut;
 
   MatrixPage({@required this.onSignOut});
 
   @override
+  MatrixPageState createState () => MatrixPageState();
+}
+
+class MatrixPageState extends State<MatrixPage> {
+
+  bool updating = false;
+
+  TaskListInfo urgentPasImportant;
+  TaskListInfo urgentImportant;
+  TaskListInfo pasUrgentPasImportant;
+  TaskListInfo pasUrgentImportant;
+
+  MatrixPageState()
+  {
+    urgentPasImportant = new TaskListInfo(
+        "Urgent, Pas Important", true, false, 0
+    );
+    pasUrgentPasImportant = new TaskListInfo(
+        "Pas Urgent, PasImportant", false, false, 0
+    );
+    pasUrgentImportant = new TaskListInfo(
+        "Pas Urgent, Important", false, true, 0
+    );
+    urgentImportant = new TaskListInfo(
+        "Urgent, Important", true, true, 0
+    );
+  }
+
+  void _getData() async {
+    setState(() {
+      updating = true;
+      ApiCalls.updateAmountFromTaskLists(urgentPasImportant);
+      ApiCalls.updateAmountFromTaskLists(pasUrgentPasImportant);
+      ApiCalls.updateAmountFromTaskLists(urgentImportant);
+      ApiCalls.updateAmountFromTaskLists(pasUrgentImportant);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (updating == false) {
+      _getData();
+    }
+    updating = false;
+
     return Scaffold(
       drawer: CustomDrawer (
-        onSignOut: () => onSignOut(),
+        onSignOut: () => widget.onSignOut(),
       ),
       appBar: AppBar(
         title: Text('Eisenhower Matrix'),
@@ -28,17 +73,13 @@ class MatrixPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new Button(
-                  urgencyText: "Urgent",
-                  impontanceText: "Pas Important",
+                  taskList: urgentPasImportant,
                   color: Colors.orange,
-                  onPressed: () => {},
                 ),
                 new VerticalDivider(width: 1.0),
                 new Button(
-                  urgencyText: "Urgent",
-                  impontanceText: "Important",
+                  taskList: urgentImportant,
                   color: Colors.green,
-                  onPressed: () => {},
                 )
               ],
             ),
@@ -50,17 +91,13 @@ class MatrixPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new Button(
-                  urgencyText: "Pas urgent",
-                  impontanceText: "Pas Important",
+                  taskList: pasUrgentPasImportant,
                   color: Colors.blue,
-                  onPressed: () => {},
                 ),
                 new VerticalDivider(width: 1.0),
                 new Button(
-                  urgencyText: "Pas urgent",
-                  impontanceText: "Important",
+                  taskList: pasUrgentImportant,
                   color: Colors.yellow,
-                  onPressed: () => {},
                 )
               ],
             ),
@@ -78,11 +115,9 @@ class MatrixPage extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  Button({this.urgencyText, this.impontanceText, this.color, this.onPressed});
-  final String urgencyText;
-  final String impontanceText;
+  Button({this.taskList, this.color});
+  TaskListInfo taskList;
   final Color color;
-  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +125,25 @@ class Button extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(16.0),
         child: MaterialButton(
-          onPressed: onPressed,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ExtractTaskListPageArgument (),
+                  settings: RouteSettings(
+                    arguments: TaskListPageArgument (
+                      taskList
+                    ),
+                  )
+                )
+            );
+          },
           color: color,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(urgencyText),
-              Text(impontanceText),
+              Text(taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
+              Text(taskList.important == true ? 'Important' : 'Pas important'),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:eisenhower_matrix/task_list_page.dart';
 import 'package:flutter/material.dart';
 import 'Authentification/login.dart';
 import 'home_page.dart';
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
+      routes: {
+        ExtractTaskListPageArgument.routeName: (context) => ExtractTaskListPageArgument(),
+      },
       title: 'Eisenhower Matrix',
       theme: ThemeData(
         primarySwatch: Colors.orange,

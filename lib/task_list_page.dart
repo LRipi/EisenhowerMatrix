@@ -1,3 +1,4 @@
+import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:eisenhower_matrix/task.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,13 @@ import 'api_calls.dart';
 
 class TaskListInfo {
   String name;
+  bool urgent;
+  bool important;
+
+  int amount;
+
+  TaskListInfo(this.name, this.urgent, this.important, this.amount);
+
 }
 
 class TaskListPageArgument {
@@ -13,7 +21,7 @@ class TaskListPageArgument {
   TaskListPageArgument(this.info);
 }
 
-class ExtractTaskListPageArgument {
+class ExtractTaskListPageArgument extends StatelessWidget {
   static const routeName = '/taskListView';
 
   @override
@@ -44,6 +52,9 @@ class TaskListPageState extends State<TaskListPage> {
     }
     updating = false;
     return Scaffold (
+      drawer: CustomDrawer(
+        onSignOut: null,
+      ),
       appBar: AppBar (
         title: Text(
           widget.listInfo.name,
