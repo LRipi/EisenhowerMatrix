@@ -1,17 +1,16 @@
-import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
 import 'package:flutter/material.dart';
-import 'register.dart';
+import 'login.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
+class _RegisterPageState extends State<RegisterPage>
 {
   final _usernamecontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold (
@@ -40,22 +39,29 @@ class _LoginPageState extends State<LoginPage>
                 ),
               )
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+              child: TextField(
+                obscureText: true,
+                controller: _passwordcontroller,
+                decoration: new InputDecoration(
+                  labelText: "Confirm your password",
+                  icon: Icon(Icons.vpn_key),
+                ),
+              )
+            ),
             FlatButton(
               onPressed: () {
                 debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatrixPage()),
-                );
               },
-              child: Text('Login'),
+              child: Text('Register'),
             ),
             Padding(
               padding: EdgeInsets.only(top: 50.0),
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Not registered yet ?',
+                    'You already have an account ?',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     )
@@ -64,11 +70,11 @@ class _LoginPageState extends State<LoginPage>
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
-                      'Register',
+                      'Login',
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold
@@ -78,7 +84,7 @@ class _LoginPageState extends State<LoginPage>
                 ],
               )
             ),
-          ],
+          ], 
         ),
       )
     );
