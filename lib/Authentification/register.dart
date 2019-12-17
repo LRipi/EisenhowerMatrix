@@ -49,39 +49,54 @@ class _RegisterPageState extends State<RegisterPage>
                     icon: Icon(Icons.vpn_key),
                   ),
                 )
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-                child: TextField(
-                  obscureText: true,
-                  controller: _passwordconfirmcontroller,
-                  decoration: new InputDecoration(
-                    labelText: "Confirm your password",
-                    labelStyle: TextStyle(
-                      color: error ? Colors.red : Colors.grey
-                    ),
-                    icon: Icon(Icons.vpn_key, color: error ? Colors.red : Colors.grey),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+              child: TextField(
+                obscureText: true,
+                controller: _passwordcontroller,
+                decoration: new InputDecoration(
+                  labelText: "Enter your password",
+                  icon: Icon(Icons.vpn_key),
+                ),
+              )
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+              child: TextField(
+                obscureText: true,
+                controller: _passwordcontroller,
+                decoration: new InputDecoration(
+                  labelText: "Confirm your password",
+                  icon: Icon(Icons.vpn_key),
+                ),
+              )
+            ),
+            FlatButton(
+              onPressed: () {
+                debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
+              },
+              child: Text('Register'),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 50.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'You already have an account ?',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    )
                   ),
-                  onChanged: (confirmPassword) {
-                    if (_passwordcontroller.text != _passwordconfirmcontroller.text)
-                      setError(true);
-                    else
-                      setError(false);
-                  },
-                )
-              ),
-              FlatButton(
-                onPressed: () {
-                  debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
-                },
-                child: Text('Register'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 50.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'You already have an account ?',
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Text(
+                      'Login',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                       )

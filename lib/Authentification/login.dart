@@ -1,16 +1,16 @@
 import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
+import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage>
+class LoginPage extends StatelessWidget
 {
-  final _usernamecontroller = TextEditingController();
-  final _passwordcontroller = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final VoidCallback onSignIn;
+
+  LoginPage({@required this.onSignIn});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage>
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextField(
-                controller: _usernamecontroller,
+                controller: _usernameController,
                 decoration: new InputDecoration(
                     labelText: "Enter your username",
                     icon: Icon(Icons.person),
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage>
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextField(
                 obscureText: true,
-                controller: _passwordcontroller,
+                controller: _passwordController,
                 decoration: new InputDecoration(
                   labelText: "Enter your password",
                   icon: Icon(Icons.vpn_key),
@@ -42,11 +42,15 @@ class _LoginPageState extends State<LoginPage>
             ),
             FlatButton(
               onPressed: () {
-                debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
-                Navigator.pushReplacement(
+                debugPrint('Username: ' + _usernameController.text + '\nPassword: ' + _passwordController.text);
+                /*Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => MatrixPage()),
                 );
+                */
+                print("should put new status to connected");
+                Authentication.setAuthState(AuthState.connected);
+                onSignIn();
               },
               child: Text('Login'),
             ),

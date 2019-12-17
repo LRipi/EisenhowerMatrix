@@ -1,18 +1,18 @@
+import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class MatrixPage extends StatefulWidget {
-  MatrixPage({Key key}) : super(key: key);
+class MatrixPage extends StatelessWidget {
 
-  @override
-  _MatrixPageState createState() => _MatrixPageState();
-}
+  final VoidCallback onSignOut;
 
-class _MatrixPageState extends State<MatrixPage> {
-  int _counter = 0;
+  MatrixPage({@required this.onSignOut});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer (
+        onSignOut: () => onSignOut(),
+      ),
       appBar: AppBar(
         title: Text('Eisenhower Matrix'),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
@@ -22,65 +22,67 @@ class _MatrixPageState extends State<MatrixPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-          new Expanded(
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Button(
-                  urgencyText: "Urgent",
-                  impontanceText: "Pas Important",
-                  color: Colors.orange,
-                  onPressed: () => {},
-                ),
-                new VerticalDivider(width: 1.0),
-                new Button(
-                  urgencyText: "Urgent",
-                  impontanceText: "Important",
-                  color: Colors.green,
-                  onPressed: () => {},
-                )
-              ],
+            new Expanded(
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Button(
+                    urgencyText: "Urgent",
+                    importanceText: "Pas Important",
+                    color: Colors.pink,
+                    onPressed: () => {},
+                  ),
+                  new VerticalDivider(width: 1.0),
+                  new Button(
+                    urgencyText: "Urgent",
+                    importanceText: "Important",
+                    color: Colors.green,
+                    onPressed: () => {},
+                  )
+                ],
+              ),
             ),
-          ),
-          new Divider(height: 1.0),
-          new Expanded(
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Button(
-                  urgencyText: "Pas urgent",
-                  impontanceText: "Pas Important",
-                  color: Colors.blue,
-                  onPressed: () => {},
-                ),
-                new VerticalDivider(width: 1.0),
-                new Button(
-                  urgencyText: "Pas urgent",
-                  impontanceText: "Important",
-                  color: Colors.yellow,
-                  onPressed: () => {},
-                )
-              ],
+            new Divider(height: 1.0),
+            new Expanded(
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Button(
+                    urgencyText: "Pas urgent",
+                    importanceText: "Pas Important",
+                    color: Colors.blue,
+                    onPressed: () => {},
+                  ),
+                  new VerticalDivider(width: 1.0),
+                  new Button(
+                    urgencyText: "Pas urgent",
+                    importanceText: "Important",
+                    color: Colors.yellow,
+                    onPressed: () => {},
+                  )
+                ],
+              ),
             ),
-          ),
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        tooltip: 'Add item',
+        backgroundColor: Colors.purple,
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }
 
 class Button extends StatelessWidget {
-  Button({this.urgencyText, this.impontanceText, this.color, this.onPressed});
+  Button({this.urgencyText, this.importanceText, this.color, this.onPressed});
   final String urgencyText;
-  final String impontanceText;
+  final String importanceText;
   final Color color;
   final Function onPressed;
 
@@ -96,7 +98,7 @@ class Button extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(urgencyText),
-              Text(impontanceText),
+              Text(importanceText),
             ],
           ),
         ),
