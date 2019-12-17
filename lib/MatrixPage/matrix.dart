@@ -1,17 +1,62 @@
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/custom_drawer.dart';
+import 'package:eisenhower_matrix/task_list_page.dart';
 import 'package:flutter/material.dart';
 
-class MatrixPage extends StatelessWidget {
-
+class MatrixPage extends StatefulWidget {
   final VoidCallback onSignOut;
 
   MatrixPage({@required this.onSignOut});
 
   @override
+  MatrixPageState createState () => MatrixPageState();
+}
+
+class MatrixPageState extends State<MatrixPage> {
+
+  bool updating = false;
+
+  TaskListInfo urgentPasImportant;
+  TaskListInfo urgentImportant;
+  TaskListInfo pasUrgentPasImportant;
+  TaskListInfo pasUrgentImportant;
+
+  MatrixPageState()
+  {
+    urgentPasImportant = new TaskListInfo(
+        "Urgent, Pas Important", true, false, 0
+    );
+    pasUrgentPasImportant = new TaskListInfo(
+        "Pas Urgent, PasImportant", false, false, 0
+    );
+    pasUrgentImportant = new TaskListInfo(
+        "Pas Urgent, Important", false, true, 0
+    );
+    urgentImportant = new TaskListInfo(
+        "Urgent, Important", true, true, 0
+    );
+  }
+
+  void _getData() async {
+    setState(() {
+      updating = true;
+      ApiCalls.updateAmountFromTaskLists(urgentPasImportant);
+      ApiCalls.updateAmountFromTaskLists(pasUrgentPasImportant);
+      ApiCalls.updateAmountFromTaskLists(urgentImportant);
+      ApiCalls.updateAmountFromTaskLists(pasUrgentImportant);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (updating == false) {
+      _getData();
+    }
+    updating = false;
+
     return Scaffold(
       drawer: CustomDrawer (
-        onSignOut: () => onSignOut(),
+        onSignOut: () => widget.onSignOut(),
       ),
       appBar: AppBar(
         title: Text('Eisenhower Matrix'),
@@ -28,43 +73,35 @@ class MatrixPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   new Button(
-                    urgencyText: "Urgent",
-                    importanceText: "Pas Important",
+                  taskList: urgentPasImportant,
                     colorStart: Color.fromRGBO(204, 43, 94, 1),
                     colorEnd: Color.fromRGBO(117, 58, 136, 1),
-                    onPressed: () => {},
-                  ),
-                  new VerticalDivider(width: 1.0),
-                  new Button(
-                    urgencyText: "Urgent",
-                    importanceText: "Important",
+                ),
+                new VerticalDivider(width: 1.0),
+                new Button(
+                  taskList: urgentImportant,
                     colorStart: Color.fromRGBO(86, 171, 47, 1),
                     colorEnd: Color.fromRGBO(168, 224, 99, 1),
-                    onPressed: () => {},
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-            new Divider(height: 1.0),
-            new Expanded(
-              child: new Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  new Button(
-                    urgencyText: "Pas urgent",
-                    importanceText: "Pas Important",
+          ),
+          new Divider(height: 1.0),
+          new Expanded(
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Button(
+                  taskList: pasUrgentPasImportant,
                     colorStart: Color.fromRGBO(33, 147, 176, 1),
                     colorEnd: Color.fromRGBO(109, 213, 237, 1),
-                    onPressed: () => {},
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
-                    urgencyText: "Pas urgent",
-                    importanceText: "Important",
+                  taskList: pasUrgentImportant,
                     colorStart: Color.fromRGBO(255, 175, 189, 1),
                     colorEnd: Color.fromRGBO(255, 195, 160, 1),
-                    onPressed: () => {},
                   )
                 ],
               ),
@@ -84,12 +121,10 @@ class MatrixPage extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  Button({this.urgencyText, this.importanceText, this.colorStart, this.colorEnd, this.onPressed});
-  final String urgencyText;
-  final String importanceText;
+  Button({this.taskList, this.colorStart, this.colorEnd});
+  final TaskListInfo taskList;
   final Color colorStart;
   final Color colorEnd;
-  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +132,24 @@ class Button extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(16.0),
         child: FlatButton(
-          onPressed: onPressed,
-          // color: color,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExtractTaskListPageArgument (),
+                settings: RouteSettings(
+                  arguments: TaskListPageArgument (
+                    taskList
+                  ),
+                )
+              )
+            );
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(urgencyText),
-              Text(importanceText),
+              Text(taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
+              Text(taskList.important == true ? 'Important' : 'Pas important'),
             ],
           ),
         ),
