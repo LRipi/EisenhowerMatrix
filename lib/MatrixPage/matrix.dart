@@ -30,14 +30,16 @@ class MatrixPage extends StatelessWidget {
                   new Button(
                     urgencyText: "Urgent",
                     importanceText: "Pas Important",
-                    color: Colors.pink,
+                    colorStart: Color.fromRGBO(204, 43, 94, 1),
+                    colorEnd: Color.fromRGBO(117, 58, 136, 1),
                     onPressed: () => {},
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
                     urgencyText: "Urgent",
                     importanceText: "Important",
-                    color: Colors.green,
+                    colorStart: Color.fromRGBO(86, 171, 47, 1),
+                    colorEnd: Color.fromRGBO(168, 224, 99, 1),
                     onPressed: () => {},
                   )
                 ],
@@ -52,14 +54,16 @@ class MatrixPage extends StatelessWidget {
                   new Button(
                     urgencyText: "Pas urgent",
                     importanceText: "Pas Important",
-                    color: Colors.blue,
+                    colorStart: Color.fromRGBO(33, 147, 176, 1),
+                    colorEnd: Color.fromRGBO(109, 213, 237, 1),
                     onPressed: () => {},
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
                     urgencyText: "Pas urgent",
                     importanceText: "Important",
-                    color: Colors.yellow,
+                    colorStart: Color.fromRGBO(255, 175, 189, 1),
+                    colorEnd: Color.fromRGBO(255, 195, 160, 1),
                     onPressed: () => {},
                   )
                 ],
@@ -80,10 +84,11 @@ class MatrixPage extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  Button({this.urgencyText, this.importanceText, this.color, this.onPressed});
+  Button({this.urgencyText, this.importanceText, this.colorStart, this.colorEnd, this.onPressed});
   final String urgencyText;
   final String importanceText;
-  final Color color;
+  final Color colorStart;
+  final Color colorEnd;
   final Function onPressed;
 
   @override
@@ -91,9 +96,9 @@ class Button extends StatelessWidget {
     return new Expanded(
       child: Container(
         margin: const EdgeInsets.all(16.0),
-        child: MaterialButton(
+        child: FlatButton(
           onPressed: onPressed,
-          color: color,
+          // color: color,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -102,6 +107,18 @@ class Button extends StatelessWidget {
             ],
           ),
         ),
+        decoration: BoxDecoration(
+          borderRadius: new BorderRadius.circular(18.0),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0, 1],
+            colors: [
+              colorStart,
+              colorEnd,
+            ],
+          ),
+        )
       ),
     );
   }
