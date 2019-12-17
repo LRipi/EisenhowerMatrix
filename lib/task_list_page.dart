@@ -60,7 +60,6 @@ class TaskListPageState extends State<TaskListPage> {
           widget.listInfo.name,
         )
       ),
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: _buildList(),
       ),
@@ -77,43 +76,20 @@ class TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildTile(BuildContext context, Task task) {
-    return Stack(
-      children: <Widget>[
-        SizedBox(
-            width: 100,
-            child: GestureDetector(
-              onTap: () {
-                /*
-            Navigator.push(
-            context,
-            MaterialPageRoute(
-            builder: (context) => ExtractCleaningRoomListPageArguments (),
-            settings: RouteSettings(
-              arguments: CleaningRoomListPageArguments (
-                service
-              ),
+    return Container (
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      padding: EdgeInsets.all(16.0),
+      color: Colors.orange,
+      child: Column(
+        children: <Widget>[
+          Text(
+            'toto',
+            style: TextStyle(
+              fontSize: 22,
             )
-            */
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(25),
-                  child: Text(
-                      task.title,
-                      style: TextStyle(
-                        fontSize: 30,
-                      )
-                  ),
-                ),
-                margin: new EdgeInsets.only(top: 20),
-                elevation: 6.0,
-              ),
-            )
-        )
-      ]
+          ),
+        ],
+      ),
     );
   }
 }
