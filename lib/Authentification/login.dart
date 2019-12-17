@@ -42,7 +42,6 @@ class LoginPage extends StatelessWidget
             ),
             FlatButton(
               onPressed: () {
-                debugPrint('Username: ' + _usernameController.text + '\nPassword: ' + _passwordController.text);
                 /*Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => MatrixPage()),
