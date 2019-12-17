@@ -1,5 +1,5 @@
+import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class _LoginPageState extends State<LoginPage>
 {
   final _usernamecontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold (
@@ -42,6 +42,10 @@ class _LoginPageState extends State<LoginPage>
             FlatButton(
               onPressed: () {
                 debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MatrixPage()),
+                );
               },
               child: Text('Login'),
             ),
@@ -70,7 +74,7 @@ class _LoginPageState extends State<LoginPage>
                 ],
               )
             ),
-          ], 
+          ],
         ),
       )
     );
