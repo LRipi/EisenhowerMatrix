@@ -2,6 +2,7 @@ import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:eisenhower_matrix/task.dart';
 import 'package:flutter/material.dart';
 
+import 'EditTask/edit_task.dart';
 import 'api_calls.dart';
 
 class TaskListInfo {
@@ -84,6 +85,17 @@ class TaskListPageState extends State<TaskListPage> {
         children: <Widget>[
           Text(
             'toto',
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExtractEditTaskPageArgument (),
+                    settings: RouteSettings(
+                      arguments: EditTaskPageArgument (
+                        task
+                      ),
+                    )
+                  )
+                );
             style: TextStyle(
               fontSize: 22,
             )
