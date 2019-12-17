@@ -27,39 +27,19 @@ class _MatrixPageState extends State<MatrixPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(16.0),
-                    child: MaterialButton(
-                      onPressed: () {},
-                      color: Colors.green,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Urgent'),
-                          Text('Pas Imporant'),
-                        ],
-                      ),
-                    ),
-                  ),
+                new Button(
+                  urgencyText: "Urgent",
+                  impontanceText: "Pas Important",
+                  color: Colors.orange,
+                  onPressed: () => {},
                 ),
                 new VerticalDivider(width: 1.0),
-                new Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(16.0),
-                    child: MaterialButton(
-                      onPressed: () {},
-                      color: Colors.orange,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Urgent'),
-                          Text('Important'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                new Button(
+                  urgencyText: "Urgent",
+                  impontanceText: "Important",
+                  color: Colors.green,
+                  onPressed: () => {},
+                )
               ],
             ),
           ),
@@ -69,39 +49,19 @@ class _MatrixPageState extends State<MatrixPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(16.0),
-                    child: MaterialButton(
-                      onPressed: () {},
-                      color: Colors.blue,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Pas urgent'),
-                          Text('Pas Important'),
-                        ],
-                      ),
-                    ),
-                  ),
+                new Button(
+                  urgencyText: "Pas urgent",
+                  impontanceText: "Pas Important",
+                  color: Colors.blue,
+                  onPressed: () => {},
                 ),
                 new VerticalDivider(width: 1.0),
-                new Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(16.0),
-                    child: MaterialButton(
-                      onPressed: () {},
-                      color: Colors.yellow,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Pas urgent'),
-                          Text('Important'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                new Button(
+                  urgencyText: "Pas urgent",
+                  impontanceText: "Important",
+                  color: Colors.yellow,
+                  onPressed: () => {},
+                )
               ],
             ),
           ),
@@ -113,6 +73,34 @@ class _MatrixPageState extends State<MatrixPage> {
       //   tooltip: 'Increment',
       //   child: Icon(Icons.add),
       // ),
+    );
+  }
+}
+
+class Button extends StatelessWidget {
+  Button({this.urgencyText, this.impontanceText, this.color, this.onPressed});
+  final String urgencyText;
+  final String impontanceText;
+  final Color color;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(16.0),
+        child: MaterialButton(
+          onPressed: onPressed,
+          color: color,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(urgencyText),
+              Text(impontanceText),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
