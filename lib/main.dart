@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:eisenhower_matrix/matrix.dart';
+import 'Authentification/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.orange,
       ),
-      home: MatrixPage() // MyHomePage(title: 'Eisenhower Matrix'),
+      home: LoginPage(),
     );
   }
 }
