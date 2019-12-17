@@ -2,6 +2,7 @@ import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:eisenhower_matrix/task.dart';
 import 'package:flutter/material.dart';
 
+import 'EditTask/edit_task.dart';
 import 'api_calls.dart';
 
 class TaskListInfo {
@@ -83,17 +84,17 @@ class TaskListPageState extends State<TaskListPage> {
             width: 100,
             child: GestureDetector(
               onTap: () {
-                /*
-            Navigator.push(
-            context,
-            MaterialPageRoute(
-            builder: (context) => ExtractCleaningRoomListPageArguments (),
-            settings: RouteSettings(
-              arguments: CleaningRoomListPageArguments (
-                service
-              ),
-            )
-            */
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExtractEditTaskPageArgument (),
+                    settings: RouteSettings(
+                      arguments: EditTaskPageArgument (
+                        task
+                      ),
+                    )
+                  )
+                );
               },
               child: Card(
                 shape: RoundedRectangleBorder(
