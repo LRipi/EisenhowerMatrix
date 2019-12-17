@@ -7,6 +7,14 @@ class CustomDrawer extends StatelessWidget {
 
   CustomDrawer({@required this.onSignOut});
 
+  void disconnectButtonClick(BuildContext context) {
+    Authentication.disconnect();
+    Navigator.pop(context);
+    if (onSignOut != null)
+      onSignOut();
+    Navigator.of(context).popUntil((route) => route.settings.name == "/");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer (
@@ -24,7 +32,7 @@ class CustomDrawer extends StatelessWidget {
                     fontSize: 18,
                   )
                 ),
-                onPressed: _() => _() {
+                onPressed: () {
                   Authentication.disconnect();
                   Navigator.pop(context);
                   if (onSignOut != null)

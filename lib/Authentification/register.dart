@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -53,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage>
             FlatButton(
               onPressed: () {
                 debugPrint('Username: ' + _usernamecontroller.text + '\nPassword: ' + _passwordcontroller.text);
+                Navigator.pop(context);
               },
               child: Text('Register'),
             ),
@@ -68,10 +68,7 @@ class _RegisterPageState extends State<RegisterPage>
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
+                      Navigator.pop(context);
                     },
                     child: Text(
                       'Login',
