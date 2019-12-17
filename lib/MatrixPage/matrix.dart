@@ -1,18 +1,18 @@
+import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class MatrixPage extends StatefulWidget {
-  MatrixPage({Key key}) : super(key: key);
+class MatrixPage extends StatelessWidget {
 
-  @override
-  _MatrixPageState createState() => _MatrixPageState();
-}
+  final VoidCallback onSignOut;
 
-class _MatrixPageState extends State<MatrixPage> {
-  int _counter = 0;
+  MatrixPage({@required this.onSignOut});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer (
+        onSignOut: () => onSignOut(),
+      ),
       appBar: AppBar(
         title: Text('Eisenhower Matrix'),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
