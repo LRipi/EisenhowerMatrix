@@ -25,16 +25,20 @@ class MatrixPageState extends State<MatrixPage> {
   MatrixPageState()
   {
     urgentPasImportant = new TaskListInfo(
-        "Urgent, Pas Important", true, false, 0
+        "Urgent, Pas Important", true, false, 0,
+        Color.fromRGBO(204, 43, 94, 1), Color.fromRGBO(117, 58, 136, 1)
     );
     pasUrgentPasImportant = new TaskListInfo(
-        "Pas Urgent, PasImportant", false, false, 0
+        "Pas Urgent, PasImportant", false, false, 0,
+        Color.fromRGBO(33, 147, 176, 1), Color.fromRGBO(109, 213, 237, 1)
     );
     pasUrgentImportant = new TaskListInfo(
-        "Pas Urgent, Important", false, true, 0
+        "Pas Urgent, Important", false, true, 0,
+        Color.fromRGBO(255, 175, 189, 1), Color.fromRGBO(255, 195, 160, 1)
     );
     urgentImportant = new TaskListInfo(
-        "Urgent, Important", true, true, 0
+       "Urgent, Important", true, true, 0,
+        Color.fromRGBO(86, 171, 47, 1), Color.fromRGBO(168, 224, 99, 1)
     );
   }
 
@@ -75,14 +79,10 @@ class MatrixPageState extends State<MatrixPage> {
                 children: <Widget>[
                   new Button(
                     taskList: urgentPasImportant,
-                    colorStart: Color.fromRGBO(204, 43, 94, 1),
-                    colorEnd: Color.fromRGBO(117, 58, 136, 1),
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
                     taskList: urgentImportant,
-                      colorStart: Color.fromRGBO(86, 171, 47, 1),
-                      colorEnd: Color.fromRGBO(168, 224, 99, 1),
                   )
                 ],
               ),
@@ -95,14 +95,10 @@ class MatrixPageState extends State<MatrixPage> {
                 children: <Widget>[
                   new Button(
                     taskList: pasUrgentPasImportant,
-                    colorStart: Color.fromRGBO(33, 147, 176, 1),
-                    colorEnd: Color.fromRGBO(109, 213, 237, 1),
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
                     taskList: pasUrgentImportant,
-                    colorStart: Color.fromRGBO(255, 175, 189, 1),
-                    colorEnd: Color.fromRGBO(255, 195, 160, 1),
                   )
                 ],
               ),
@@ -134,10 +130,8 @@ class MatrixPageState extends State<MatrixPage> {
 }
 
 class Button extends StatelessWidget {
-  Button({this.taskList, this.colorStart, this.colorEnd});
+  Button({this.taskList});
   final TaskListInfo taskList;
-  final Color colorStart;
-  final Color colorEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +157,13 @@ class Button extends StatelessWidget {
             children: <Widget>[
               Text(taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
               Text(taskList.important == true ? 'Important' : 'Pas important'),
+              Divider (),
+              Text(
+                taskList.amount.toString(),
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              )
             ],
           ),
         ),
@@ -173,8 +174,8 @@ class Button extends StatelessWidget {
             end: Alignment.bottomRight,
             stops: [0, 1],
             colors: [
-              colorStart,
-              colorEnd,
+              taskList.startColor,
+              taskList.endColor,
             ],
           ),
         )
