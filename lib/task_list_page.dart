@@ -12,10 +12,11 @@ class TaskListInfo {
 
   int amount;
 
-  Color start;
-  Color end;
+  Color startColor;
+  Color endColor;
 
-  TaskListInfo(this.name, this.urgent, this.important, this.amount);
+  TaskListInfo(this.name, this.urgent, this.important, this.amount,
+      this.startColor, this.endColor);
 
 }
 
@@ -86,12 +87,10 @@ class TaskListPageState extends State<TaskListPage> {
         gradient: LinearGradient (
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          stops: [0, 0.25, 0.5, 0.75],
+          stops: [0, 1],
           colors: [
-            Colors.blue[800],
-            Colors.blue[600],
-            Colors.red[600],
-            Colors.red[800],
+            widget.listInfo.startColor,
+            widget.listInfo.endColor,
           ]
         )
       ),
@@ -100,6 +99,7 @@ class TaskListPageState extends State<TaskListPage> {
       child: Column(
         children: <Widget>[
           FlatButton(
+            onPressed: () {},
             child: Text(
                 'toto',
                 style: TextStyle(
