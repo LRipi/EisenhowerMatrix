@@ -8,16 +8,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        ExtractTaskListPageArgument.routeName: (context) => ExtractTaskListPageArgument(),
+    return GestureDetector (
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
       },
-      title: 'Eisenhower Matrix',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
-      home: HomePage(),
+      child: MaterialApp (
+        initialRoute: '/',
+        routes: {
+          ExtractTaskListPageArgument.routeName: (context) => ExtractTaskListPageArgument(),
+        },
+        title: 'Eisenhower Matrix',
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+        ),
+        home: HomePage(),
+      )
     );
   }
 }
