@@ -51,53 +51,57 @@ class EditTaskPageState extends State<EditTaskPage> {
         child: Form(
           child: Container(
             margin: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                ),
-                TextFormField(
-                  maxLines: 4,
-                  decoration: InputDecoration(labelText: 'Description'),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                ),
-                Text('Urgency'),
-                Slider.adaptive(
-                  onChanged: (_value){
-                    setState((){
-                      urgency= _value;
-                    });
-                  },
-                  value: urgency,
-                  divisions: 9,
-                  max: 10,
-                  min: 1,
-                  label: urgency.toString(),
-                ),
-                Text('Importance'),
-                Slider.adaptive(
-                  onChanged: (_value){
-                    setState((){
-                      importance= _value;
-                    });
-                  },
-                  value: importance,
-                  divisions: 9,
-                  max: 10,
-                  min: 1,
-                  label: importance.toString(),
-                ),
-                RaisedButton(
-                  onPressed: () {},
-                  child: Text('Add'),
-                  color: Colors.blue,
+            child: ListView(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                    ),
+                    TextFormField(
+                      maxLines: 4,
+                      decoration: InputDecoration(labelText: 'Description'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                    ),
+                    Text('Urgency'),
+                    Slider.adaptive(
+                      onChanged: (_value){
+                        setState((){
+                          urgency= _value;
+                        });
+                      },
+                      value: urgency,
+                      divisions: 9,
+                      max: 10,
+                      min: 1,
+                      label: urgency.toString(),
+                    ),
+                    Text('Importance'),
+                    Slider.adaptive(
+                      onChanged: (_value){
+                        setState((){
+                          importance= _value;
+                        });
+                      },
+                      value: importance,
+                      divisions: 9,
+                      max: 10,
+                      min: 1,
+                      label: importance.toString(),
+                    ),
+                    RaisedButton(
+                      onPressed: () {},
+                      child: Text('Add'),
+                      color: Colors.blue,
+                    ),
+                  ],
                 ),
               ],
-            ),
+            )
           ),
         ),
       ),
