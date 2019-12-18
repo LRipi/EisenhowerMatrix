@@ -34,7 +34,7 @@ class MatrixPageState extends State<MatrixPage> {
     );
     pasUrgentImportant = new TaskListInfo(
         "Pas Urgent, Important", false, true, 0,
-        Color.fromRGBO(255, 175, 189, 1), Color.fromRGBO(255, 195, 160, 1)
+        Color.fromRGBO(214, 109, 117, 1), Color.fromRGBO(226, 149, 135, 1)
     );
     urgentImportant = new TaskListInfo(
        "Urgent, Important", true, true, 0,
