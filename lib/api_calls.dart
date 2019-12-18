@@ -20,6 +20,18 @@ class ApiCalls {
     result.add(tmp);
     result.add(tmp);
     result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
+    result.add(tmp);
     return result;
   }
 }
