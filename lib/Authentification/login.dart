@@ -27,8 +27,8 @@ class LoginPage extends StatelessWidget
               child: TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                    labelText: "Enter your username",
-                    icon: Icon(Icons.person),
+                    labelText: "Enter your email",
+                    icon: Icon(Icons.mail),
                   ),
                 )
             ),
@@ -55,7 +55,9 @@ class LoginPage extends StatelessWidget
                       var response = await http.post('http://192.168.1.16:3000/users/login', body: {'login': _usernameController.text, 'password': _passwordController.text});
                       if (jsonDecode(response.body)['success'] == true) {
                         print("should put new status to connected");
+                        print('user: ' + jsonDecode(response.body).toString());
                         Authentication.setAuthState(AuthState.connected);
+                        Authentication.setJwtToken(jsonDecode(response.body)['user']['token']);
                         onSignIn();
                       } else {
                         debugPrint('error: ' + response.statusCode.toString());
@@ -89,7 +91,7 @@ class LoginPage extends StatelessWidget
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pop(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => RegisterPage()),
                           );
