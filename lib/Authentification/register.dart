@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -13,7 +12,7 @@ class _RegisterPageState extends State<RegisterPage>
   final _passwordcontroller = TextEditingController();
   final _passwordconfirmcontroller = TextEditingController();
   bool error = false;
-  
+
   void setError(bool val) {
     setState(() {
       error = val;
@@ -31,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage>
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
               child: TextField(
                 controller: _usernamecontroller,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                     labelText: "Enter your username",
                     icon: Icon(Icons.person),
                   ),
@@ -42,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage>
               child: TextField(
                 obscureText: true,
                 controller: _passwordcontroller,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Enter your password",
                   icon: Icon(Icons.vpn_key),
                 ),
@@ -53,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage>
               child: TextField(
                 obscureText: true,
                 controller: _passwordconfirmcontroller,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Confirm your password",
                   labelStyle: TextStyle(
                     color: error ? Colors.red : Colors.grey

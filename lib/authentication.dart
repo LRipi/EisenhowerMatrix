@@ -11,7 +11,7 @@ class Authentication {
     return state;
   }
 
-  static AuthState setAuthState (AuthState newState) {
+  static void setAuthState (AuthState newState) {
     state = newState;
   }
 

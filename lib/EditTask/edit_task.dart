@@ -1,7 +1,8 @@
 // import 'package:eisenhower_matrix/custom_drawer.dart';
+import 'package:eisenhower_matrix/custom_drawer.dart';
+import 'package:eisenhower_matrix/task.dart';
 import 'package:flutter/material.dart';
 
-import '../task.dart';
 
 class EditTaskPageArgument {
   final Task task;
@@ -16,12 +17,14 @@ class ExtractEditTaskPageArgument extends StatelessWidget {
   Widget build(BuildContext context) {
     final EditTaskPageArgument args = ModalRoute.of(context).settings.arguments;
 
-    return EditTaskPage ();
+    return EditTaskPage (task: args.task);
   }
 }
 
 class EditTaskPage extends StatefulWidget {
-  EditTaskPage();
+  final Task task;
+
+  EditTaskPage ({@required this.task});
 
   @override
   EditTaskPageState createState () => EditTaskPageState();
@@ -29,32 +32,17 @@ class EditTaskPage extends StatefulWidget {
 
 class EditTaskPageState extends State<EditTaskPage> {
 
-  bool updating = false;
   double urgency = 5.0;
   double importance = 5.0;
 
   EditTaskPageState();
-  // {
-  // }
-
-  void _getData() async {
-    setState(() {
-      updating = true;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (updating == false) {
-      _getData();
-    }
-    updating = false;
-
-
     return Scaffold(
-      // drawer: CustomDrawer (
-      //   onSignOut: () => widget.onSignOut(),
-      // ),
+      drawer: CustomDrawer (
+        onSignOut: null,
+      ),
       appBar: AppBar(
         title: Text('Add task'),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,

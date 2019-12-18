@@ -7,10 +7,10 @@ class ApiCalls {
 
   static Future<void> updateAmountFromTaskLists(TaskListInfo info) async {
     info.amount = 5;
-    //return info;
+    // return info;
   }
 
-  //TODO link to API
+  // TODO link to API
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
     List<Task> result = new List<Task> ();
     Task tmp = new Task();

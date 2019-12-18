@@ -72,32 +72,32 @@ class MatrixPageState extends State<MatrixPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Expanded(
-              child: new Row(
+            Expanded(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  new Button(
+                  Button(
                     taskList: urgentPasImportant,
                   ),
-                  new VerticalDivider(width: 1.0),
-                  new Button(
+                  VerticalDivider(width: 1.0),
+                  Button(
                     taskList: urgentImportant,
                   )
                 ],
               ),
             ),
-            new Divider(height: 1.0),
-            new Expanded(
-              child: new Row(
+            Divider(height: 1.0),
+            Expanded(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  new Button(
+                  Button(
                     taskList: pasUrgentPasImportant,
                   ),
-                  new VerticalDivider(width: 1.0),
-                  new Button(
+                  VerticalDivider(width: 1.0),
+                  Button(
                     taskList: pasUrgentImportant,
                   )
                 ],
@@ -135,7 +135,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Expanded(
+    return Expanded(
       child: Container(
         margin: const EdgeInsets.all(16.0),
         child: FlatButton(
@@ -168,7 +168,7 @@ class Button extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-          borderRadius: new BorderRadius.circular(18.0),
+          borderRadius: BorderRadius.circular(18.0),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

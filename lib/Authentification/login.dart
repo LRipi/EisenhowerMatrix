@@ -1,4 +1,3 @@
-import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
 import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
@@ -23,7 +22,7 @@ class LoginPage extends StatelessWidget
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextField(
                 controller: _usernameController,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                     labelText: "Enter your username",
                     icon: Icon(Icons.person),
                   ),
@@ -34,7 +33,7 @@ class LoginPage extends StatelessWidget
               child: TextField(
                 obscureText: true,
                 controller: _passwordController,
-                decoration: new InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Enter your password",
                   icon: Icon(Icons.vpn_key),
                 ),

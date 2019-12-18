@@ -33,7 +33,7 @@ class ExtractTaskListPageArgument extends StatelessWidget {
   Widget build(BuildContext context) {
     final TaskListPageArgument args = ModalRoute.of(context).settings.arguments;
 
-    return TaskListPage (args.info);
+    return TaskListPage (listInfo: args.info);
   }
 }
 
@@ -99,7 +99,20 @@ class TaskListPageState extends State<TaskListPage> {
       child: Column(
         children: <Widget>[
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              // print("flkanjklfbjhgagbf,k");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExtractEditTaskPageArgument (),
+                  settings: RouteSettings(
+                    arguments: EditTaskPageArgument (
+                      task
+                    ),
+                  )
+                )
+              );
+            },
             child: Text(
                 'toto',
                 style: TextStyle(
@@ -116,11 +129,9 @@ class TaskListPageState extends State<TaskListPage> {
 }
 
 class TaskListPage extends StatefulWidget {
-  TaskListInfo listInfo;
+  final TaskListInfo listInfo;
 
-  TaskListPage (TaskListInfo list) {
-    this.listInfo = list;
-  }
+  TaskListPage ({@required this.listInfo});
 
   @override
   TaskListPageState createState () => TaskListPageState();

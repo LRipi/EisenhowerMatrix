@@ -15,13 +15,14 @@ class HomePageState extends State<HomePage> {
   Widget build (BuildContext context) {
     print("in build of homepage");
     switch (Authentication.getAuthState()) {
-      case AuthState.disconnected:
-        return LoginPage(
-          onSignIn: () => _updateAuthStatus()
-        );
       case AuthState.connected:
         return MatrixPage(
           onSignOut: () => _updateAuthStatus()
+        );
+      case AuthState.disconnected:
+      default:
+        return LoginPage(
+          onSignIn: () => _updateAuthStatus()
         );
     }
   }
