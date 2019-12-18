@@ -10,6 +10,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage>
 {
   final _usernamecontroller = TextEditingController();
+  final _mailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _passwordconfirmcontroller = TextEditingController();
   bool error = false;
@@ -27,6 +28,16 @@ class _RegisterPageState extends State<RegisterPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+              child: TextField(
+                controller: _mailcontroller,
+                decoration: new InputDecoration(
+                    labelText: "Enter your email",
+                    icon: Icon(Icons.mail),
+                  ),
+                )
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
               child: TextField(
@@ -68,10 +79,29 @@ class _RegisterPageState extends State<RegisterPage>
                 },
               )
             ),
-            FlatButton(
-              onPressed: () {
-              },
-              child: Text('Register'),
+            ButtonBar(
+              mainAxisSize: MainAxisSize.min,
+              buttonMinWidth: 150,
+              children: <Widget>[
+                RaisedButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text('Register'),
+                  onPressed: () async {
+                    if (_passwordcontroller.text == _passwordconfirmcontroller.text) {
+                      var response = await http.post('http://192.168.1.16:3000/users/create', body: {'name': _usernamecontroller.text, 'login': _mailcontroller.text, 'password': _passwordcontroller.text});
+                      debugPrint('Status Code: ' + response.statusCode.toString() + '\nBody: ' + response.body.toString());
+                      if (response.statusCode == 201)
+                        Navigator.pop(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage(onSignIn: () {},)),
+                        );
+                    }
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(8.0),
+                  ),
+                )
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(top: 25.0),
@@ -83,20 +113,22 @@ class _RegisterPageState extends State<RegisterPage>
                       color: Theme.of(context).primaryColor,
                     )
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage(onSignIn: () {},)),
-                      );
-                    },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold
+                  ButtonBar(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('Login'),
+                        onPressed: () {
+                          Navigator.pop(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage(onSignIn: () {},)),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(8.0),
+                        ) 
                       )
-                    ),
+                    ],
                   )
                 ],
               )
