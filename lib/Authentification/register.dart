@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eisenhower_matrix/Authentification/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +16,26 @@ class _RegisterPageState extends State<RegisterPage>
   final _passwordcontroller = TextEditingController();
   final _passwordconfirmcontroller = TextEditingController();
   bool error = false;
+
+  void errorPopUp(String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error', style: TextStyle(color: Colors.red)),
+          content: Text(error, style: TextStyle(color: Colors.red)), 
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ]
+        );
+      }
+    );
+  }
 
   void setError(bool val) {
     setState(() {
@@ -68,6 +90,8 @@ class _RegisterPageState extends State<RegisterPage>
                             context,
                             MaterialPageRoute(builder: (context) => LoginPage(onSignIn: () {},)),
                           );
+                        else
+                           errorPopUp(jsonDecode(response.body)['message']);
                       }
                     },
                     shape: RoundedRectangleBorder(
