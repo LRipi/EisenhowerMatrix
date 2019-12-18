@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:eisenhower_matrix/MatrixPage/matrix.dart';
 import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -54,7 +53,7 @@ class LoginPage extends StatelessWidget
                     child: Text('Login'),
                     onPressed: () async {
                       if (_usernameController.text != '' && _passwordController.text != '') {
-                        var response = await http.post('http://192.168.1.16:3000/users/login', body: {'login': _usernameController.text, 'password': _passwordController.text});
+                        var response = await http.post('http://vps.lemartret.com:3000/users/login', body: {'login': _usernameController.text, 'password': _passwordController.text});
                         if (jsonDecode(response.body)['success'] == true) {
                           print("should put new status to connected");
                           print('user: ' + jsonDecode(response.body).toString());
