@@ -22,5 +22,6 @@ class Authentication {
 
   static void disconnect () {
     setAuthState(AuthState.disconnected);
+    setJwtToken('');
   }
 }
