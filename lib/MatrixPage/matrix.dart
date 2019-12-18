@@ -144,6 +144,13 @@ class Button extends StatelessWidget {
             children: <Widget>[
               Text(taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
               Text(taskList.important == true ? 'Important' : 'Pas important'),
+              Divider (),
+              Text(
+                taskList.amount.toString(),
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              )
             ],
           ),
         ),
