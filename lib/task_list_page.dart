@@ -100,6 +100,7 @@ class TaskListPageState extends State<TaskListPage> {
       child: Column(
         children: <Widget>[
           FlatButton(
+            onPressed: () {},
             child: Text(
                 'toto',
                 style: TextStyle(

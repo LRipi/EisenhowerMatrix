@@ -1,3 +1,4 @@
+import 'package:eisenhower_matrix/EditTask/edit_task.dart';
 import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/custom_drawer.dart';
 import 'package:eisenhower_matrix/task_list_page.dart';
@@ -73,33 +74,33 @@ class MatrixPageState extends State<MatrixPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   new Button(
-                  taskList: urgentPasImportant,
+                    taskList: urgentPasImportant,
                     colorStart: Color.fromRGBO(204, 43, 94, 1),
                     colorEnd: Color.fromRGBO(117, 58, 136, 1),
-                ),
-                new VerticalDivider(width: 1.0),
-                new Button(
-                  taskList: urgentImportant,
-                    colorStart: Color.fromRGBO(86, 171, 47, 1),
-                    colorEnd: Color.fromRGBO(168, 224, 99, 1),
-                )
-              ],
+                  ),
+                  new VerticalDivider(width: 1.0),
+                  new Button(
+                    taskList: urgentImportant,
+                      colorStart: Color.fromRGBO(86, 171, 47, 1),
+                      colorEnd: Color.fromRGBO(168, 224, 99, 1),
+                  )
+                ],
+              ),
             ),
-          ),
-          new Divider(height: 1.0),
-          new Expanded(
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Button(
-                  taskList: pasUrgentPasImportant,
+            new Divider(height: 1.0),
+            new Expanded(
+              child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Button(
+                    taskList: pasUrgentPasImportant,
                     colorStart: Color.fromRGBO(33, 147, 176, 1),
                     colorEnd: Color.fromRGBO(109, 213, 237, 1),
                   ),
                   new VerticalDivider(width: 1.0),
                   new Button(
-                  taskList: pasUrgentImportant,
+                    taskList: pasUrgentImportant,
                     colorStart: Color.fromRGBO(255, 175, 189, 1),
                     colorEnd: Color.fromRGBO(255, 195, 160, 1),
                   )
@@ -110,9 +111,21 @@ class MatrixPageState extends State<MatrixPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ExtractEditTaskPageArgument (),
+              settings: RouteSettings(
+                arguments: EditTaskPageArgument (
+                  null
+                ),
+              )
+            )
+          );
+        },
         tooltip: 'Add item',
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.blue,
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
