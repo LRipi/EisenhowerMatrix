@@ -1,5 +1,6 @@
+import 'package:eisenhower_matrix/Authentification/login.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -125,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage>
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(8.0),
-                        ) 
+                        )
                       )
                     ],
                   )
