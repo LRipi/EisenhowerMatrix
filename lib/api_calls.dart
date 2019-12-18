@@ -15,6 +15,8 @@ class ApiCalls {
     List<Task> result = new List<Task> ();
     Task tmp = new Task();
     tmp.title = "toto";
+    tmp.importance = 3;
+    tmp.urgency = 7;
     tmp.description = "description lol";
     result.add(tmp);
     result.add(tmp);

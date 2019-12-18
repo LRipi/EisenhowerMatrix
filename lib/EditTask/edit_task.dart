@@ -32,9 +32,6 @@ class EditTaskPage extends StatefulWidget {
 
 class EditTaskPageState extends State<EditTaskPage> {
 
-  double urgency = 5.0;
-  double importance = 5.0;
-
   EditTaskPageState();
 
   @override
@@ -44,7 +41,7 @@ class EditTaskPageState extends State<EditTaskPage> {
         onSignOut: null,
       ),
       appBar: AppBar(
-        title: Text('Add task'),
+        title: Text(),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: Center(
@@ -56,9 +53,11 @@ class EditTaskPageState extends State<EditTaskPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 TextFormField(
+                  initialValue: widget.task.title,
                   decoration: InputDecoration(labelText: 'Title'),
                 ),
                 TextFormField(
+                  initialValue: widget.task.description,
                   maxLines: 4,
                   decoration: InputDecoration(labelText: 'Description'),
                 ),
@@ -69,27 +68,27 @@ class EditTaskPageState extends State<EditTaskPage> {
                 Slider.adaptive(
                   onChanged: (_value){
                     setState((){
-                      urgency= _value;
+                      widget.task.urgency = _value.toInt();
                     });
                   },
-                  value: urgency,
+                  value: widget.task.urgency.toDouble(),
                   divisions: 9,
                   max: 10,
                   min: 1,
-                  label: urgency.toString(),
+                  label: widget.task.urgency.toInt().toString(),
                 ),
                 Text('Importance'),
                 Slider.adaptive(
                   onChanged: (_value){
                     setState((){
-                      importance= _value;
+                      widget.task.importance = _value.toInt();
                     });
                   },
-                  value: importance,
+                  value: widget.task.importance.toDouble(),
                   divisions: 9,
                   max: 10,
                   min: 1,
-                  label: importance.toString(),
+                  label: widget.task.importance.toInt().toString(),
                 ),
                 RaisedButton(
                   onPressed: () {},
