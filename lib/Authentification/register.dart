@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eisenhower_matrix/Authentification/login.dart';
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage>
                     child: Text('Register'),
                     onPressed: () async {
                       if (_passwordcontroller.text == _passwordconfirmcontroller.text) {
-                        var response = await http.post('http://192.168.1.16:3000/users/create', body: {'name': _usernamecontroller.text, 'login': _mailcontroller.text, 'password': _passwordcontroller.text});
+                        var response = await http.post(ApiCalls.baseUrl + 'users/create', body: {'name': _usernamecontroller.text, 'login': _mailcontroller.text, 'password': _passwordcontroller.text});
                         debugPrint('Status Code: ' + response.statusCode.toString() + '\nBody: ' + response.body.toString());
                         if (response.statusCode == 201)
                           Navigator.pop(
