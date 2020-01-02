@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget
                           child: Text(
                             'Register',
                             style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.black,
                             ),
                           ),
                           onPressed: () {

@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class EditTaskPageArgument {
   final Task task;
+  final bool isNew;
 
-  EditTaskPageArgument(this.task);
+  EditTaskPageArgument(this.task, this.isNew);
 }
 
 class ExtractEditTaskPageArgument extends StatelessWidget {
@@ -17,14 +18,15 @@ class ExtractEditTaskPageArgument extends StatelessWidget {
   Widget build(BuildContext context) {
     final EditTaskPageArgument args = ModalRoute.of(context).settings.arguments;
 
-    return EditTaskPage (task: args.task);
+    return EditTaskPage (task: args.task, isNew: args.isNew);
   }
 }
 
 class EditTaskPage extends StatefulWidget {
   final Task task;
+  final bool isNew;
 
-  EditTaskPage ({@required this.task});
+  EditTaskPage ({@required this.task, this.isNew});
 
   @override
   EditTaskPageState createState () => EditTaskPageState();
@@ -41,7 +43,7 @@ class EditTaskPageState extends State<EditTaskPage> {
         onSignOut: null,
       ),
       appBar: AppBar(
-        title: Text('Edit / Create Task'),
+        title: Text( widget.isNew ? 'Create Task' : 'Edit Task' ),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: Center(
@@ -94,7 +96,7 @@ class EditTaskPageState extends State<EditTaskPage> {
                     ),
                     RaisedButton(
                       onPressed: () {},
-                      child: Text('Add'),
+                      child: Text(widget.isNew ? 'Add task' : 'Save task'),
                       color: Colors.blue,
                     ),
                   ],
@@ -104,13 +106,6 @@ class EditTaskPageState extends State<EditTaskPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Save Task',
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.save),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

@@ -107,7 +107,8 @@ class TaskListPageState extends State<TaskListPage> {
                   builder: (context) => ExtractEditTaskPageArgument (),
                   settings: RouteSettings(
                     arguments: EditTaskPageArgument (
-                      task
+                      task,
+                      false,
                     ),
                   )
                 )

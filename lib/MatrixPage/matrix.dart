@@ -1,6 +1,7 @@
 import 'package:eisenhower_matrix/EditTask/edit_task.dart';
 import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/custom_drawer.dart';
+import 'package:eisenhower_matrix/task.dart';
 import 'package:eisenhower_matrix/task_list_page.dart';
 import 'package:flutter/material.dart';
 
@@ -114,7 +115,8 @@ class MatrixPageState extends State<MatrixPage> {
               builder: (context) => ExtractEditTaskPageArgument (),
               settings: RouteSettings(
                 arguments: EditTaskPageArgument (
-                  null
+                  new Task(),
+                  true,
                 ),
               )
             )
@@ -125,7 +127,7 @@ class MatrixPageState extends State<MatrixPage> {
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-    );
+    ) ;
   }
 }
 
