@@ -12,6 +12,8 @@ class TaskListInfo {
 
   int amount;
 
+  List<Task> tasks = new List<Task>();
+
   Color startColor;
   Color endColor;
 

@@ -16,8 +16,6 @@ class MatrixPage extends StatefulWidget {
 
 class MatrixPageState extends State<MatrixPage> {
 
-  bool updating = false;
-
   TaskListInfo urgentPasImportant;
   TaskListInfo urgentImportant;
   TaskListInfo pasUrgentPasImportant;
@@ -43,23 +41,8 @@ class MatrixPageState extends State<MatrixPage> {
     );
   }
 
-  void _getData() async {
-    setState(() {
-      updating = true;
-      ApiCalls.updateAmountFromTaskLists(urgentPasImportant);
-      ApiCalls.updateAmountFromTaskLists(pasUrgentPasImportant);
-      ApiCalls.updateAmountFromTaskLists(urgentImportant);
-      ApiCalls.updateAmountFromTaskLists(pasUrgentImportant);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (updating == false) {
-      _getData();
-    }
-    updating = false;
-
     return Scaffold(
       drawer: CustomDrawer (
         onSignOut: () => widget.onSignOut(),
@@ -78,11 +61,11 @@ class MatrixPageState extends State<MatrixPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Button(
+                  CategoryButton(
                     taskList: urgentPasImportant,
                   ),
                   VerticalDivider(width: 1.0),
-                  Button(
+                  CategoryButton(
                     taskList: urgentImportant,
                   )
                 ],
@@ -94,11 +77,11 @@ class MatrixPageState extends State<MatrixPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Button(
+                  CategoryButton(
                     taskList: pasUrgentPasImportant,
                   ),
                   VerticalDivider(width: 1.0),
-                  Button(
+                  CategoryButton(
                     taskList: pasUrgentImportant,
                   )
                 ],
@@ -131,12 +114,40 @@ class MatrixPageState extends State<MatrixPage> {
   }
 }
 
-class Button extends StatelessWidget {
-  Button({this.taskList});
+class CategoryButton extends StatefulWidget
+{
+  CategoryButton({@required this.taskList});
   final TaskListInfo taskList;
 
   @override
+  ButtonState createState () => ButtonState();
+}
+
+class ButtonState extends State<CategoryButton> {
+
+  bool updating = false;
+
+  void _test() async {
+    print('gona calculate amount');
+    updating = true;
+    await ApiCalls.updateAmountFromTaskLists(widget.taskList);
+    print('amount is: ' + widget.taskList.amount.toString());
+  }
+
+  void _getData() async {
+    await ApiCalls.updateAmountFromTaskLists(widget.taskList);
+    setState(() {
+      updating = true;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (updating == false) {
+      _getData();
+    }
+    updating = false;
+
     return Expanded(
       child: Container(
         margin: const EdgeInsets.all(16.0),
@@ -148,7 +159,7 @@ class Button extends StatelessWidget {
                 builder: (context) => ExtractTaskListPageArgument (),
                 settings: RouteSettings(
                   arguments: TaskListPageArgument (
-                    taskList
+                    widget.taskList
                   ),
                 )
               )
@@ -157,11 +168,11 @@ class Button extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
-              Text(taskList.important == true ? 'Important' : 'Pas important'),
+              Text(widget.taskList.urgent == true ? 'Urgent' : 'Pas urgent'),
+              Text(widget.taskList.important == true ? 'Important' : 'Pas important'),
               Divider (),
               Text(
-                taskList.amount.toString(),
+                widget.taskList.amount.toString(),
                 style: TextStyle(
                   fontSize: 25,
                 ),
@@ -176,8 +187,8 @@ class Button extends StatelessWidget {
             end: Alignment.bottomRight,
             stops: [0, 1],
             colors: [
-              taskList.startColor,
-              taskList.endColor,
+              widget.taskList.startColor,
+              widget.taskList.endColor,
             ],
           ),
         )

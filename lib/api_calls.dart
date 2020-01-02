@@ -9,13 +9,14 @@ class ApiCalls {
   static String baseUrl = 'http://vps.lemartret.com:3000/';
 
   static Future<void> updateAmountFromTaskLists(TaskListInfo info) async {
-    info.amount = 5;
-    // return info;
+    info.tasks = await getTasksFromList(info);
+    info.amount = info.tasks.length;
+    print('computed amount for ' + info.important.toString() + ', ' + info.urgent.toString() + info.amount.toString());
   }
 
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
     List<Task> result = new List<Task> ();
-    http.Response response = await http.get(baseUrl + '/tasks', headers: {
+    http.Response response = await http.get(baseUrl + 'tasks', headers: {
       "x-access-token": Authentication.jwtToken
     });
     if (jsonDecode(response.body)['success'] == true) {
@@ -32,7 +33,7 @@ class ApiCalls {
 
   static Future<List<Task>> getRemovedTasksFromList (TaskListInfo listInfo) async {
     List<Task> result = new List<Task> ();
-    http.Response response = await http.get(baseUrl + '/tasks/history', headers: {
+    http.Response response = await http.get(baseUrl + 'tasks/history', headers: {
       "x-access-token": Authentication.jwtToken
     });
     if (jsonDecode(response.body)['success'] == true) {
@@ -48,19 +49,26 @@ class ApiCalls {
   }
 
   static void createTask(Task newTask) async {
-    http.Response response = await http.post(baseUrl + '/tasks', headers: {
+    print('should create: ' + newTask.title);
+    print('with desc: ' + newTask.description);
+    print('and codes: ' + newTask.urgency.toString() + ', ' + newTask.importance.toString());
+
+    print(Authentication.jwtToken);
+
+    http.Response response = await http.post(baseUrl + 'tasks/', headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
-      "urgence": newTask.urgency,
-      "importance": newTask.importance,
+      "urgence": newTask.urgency.toString(),
+      "importance": newTask.importance.toString(),
       "title": newTask.title,
       "description": newTask.description,
-      "deadline": newTask.deadline
+      "deadline": newTask.deadline.toIso8601String()
     });
+    print(response.statusCode);
   }
 
   static void updateTask(Task task) async {
-    http.Response response = await http.put(baseUrl + '/tasks/' + task.id.toString(), headers: {
+    http.Response response = await http.put(baseUrl + 'tasks/' + task.id.toString(), headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
       "urgence": task.urgency,
@@ -72,7 +80,7 @@ class ApiCalls {
   }
 
   static void deleteTask(Task task) async {
-    http.Response response = await http.delete(baseUrl + '/tasks/' + task.id.toString(), headers: {
+    http.Response response = await http.delete(baseUrl + 'tasks/' + task.id.toString(), headers: {
       "x-access-token": Authentication.jwtToken
     });
   }
