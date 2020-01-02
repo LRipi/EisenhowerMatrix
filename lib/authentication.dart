@@ -16,6 +16,10 @@ class Authentication {
     state = newState;
   }
 
+  static String getJwtToken() {
+    return jwtToken;
+  }
+
   static void setJwtToken (String token) {
     jwtToken = token;
   }

@@ -32,9 +32,6 @@ class EditTaskPage extends StatefulWidget {
 
 class EditTaskPageState extends State<EditTaskPage> {
 
-  double urgency = 5.0;
-  double importance = 5.0;
-
   EditTaskPageState();
 
   @override
@@ -44,60 +41,66 @@ class EditTaskPageState extends State<EditTaskPage> {
         onSignOut: null,
       ),
       appBar: AppBar(
-        title: Text('Add task'),
+        title: Text('Edit / Create Task'),
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: Center(
         child: Form(
           child: Container(
             margin: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                ),
-                TextFormField(
-                  maxLines: 4,
-                  decoration: InputDecoration(labelText: 'Description'),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                ),
-                Text('Urgency'),
-                Slider.adaptive(
-                  onChanged: (_value){
-                    setState((){
-                      urgency= _value;
-                    });
-                  },
-                  value: urgency,
-                  divisions: 9,
-                  max: 10,
-                  min: 1,
-                  label: urgency.toString(),
-                ),
-                Text('Importance'),
-                Slider.adaptive(
-                  onChanged: (_value){
-                    setState((){
-                      importance= _value;
-                    });
-                  },
-                  value: importance,
-                  divisions: 9,
-                  max: 10,
-                  min: 1,
-                  label: importance.toString(),
-                ),
-                RaisedButton(
-                  onPressed: () {},
-                  child: Text('Add'),
-                  color: Colors.blue,
+            child: ListView(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    TextFormField(
+                  initialValue: widget.task.title,
+                      decoration: InputDecoration(labelText: 'Title'),
+                    ),
+                    TextFormField(
+                  initialValue: widget.task.description,
+                      maxLines: 4,
+                      decoration: InputDecoration(labelText: 'Description'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                    ),
+                    Text('Urgency'),
+                    Slider.adaptive(
+                      onChanged: (_value){
+                        setState((){
+                      widget.task.urgency = _value.toInt();
+                        });
+                      },
+                  value: widget.task.urgency.toDouble(),
+                      divisions: 9,
+                      max: 10,
+                      min: 1,
+                  label: widget.task.urgency.toInt().toString(),
+                    ),
+                    Text('Importance'),
+                    Slider.adaptive(
+                      onChanged: (_value){
+                        setState((){
+                      widget.task.importance = _value.toInt();
+                        });
+                      },
+                  value: widget.task.importance.toDouble(),
+                      divisions: 9,
+                      max: 10,
+                      min: 1,
+                  label: widget.task.importance.toInt().toString(),
+                    ),
+                    RaisedButton(
+                      onPressed: () {},
+                      child: Text('Add'),
+                      color: Colors.blue,
+                    ),
+                  ],
                 ),
               ],
-            ),
+            )
           ),
         ),
       ),

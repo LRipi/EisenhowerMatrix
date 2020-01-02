@@ -5,6 +5,8 @@ import 'package:eisenhower_matrix/task_list_page.dart';
 
 class ApiCalls {
 
+  static String baseUrl = 'http://vps.lemartret.com:3000/';
+
   static Future<void> updateAmountFromTaskLists(TaskListInfo info) async {
     info.amount = 5;
     // return info;
@@ -15,6 +17,8 @@ class ApiCalls {
     List<Task> result = new List<Task> ();
     Task tmp = new Task();
     tmp.title = "toto";
+    tmp.importance = 3;
+    tmp.urgency = 7;
     tmp.description = "description lol";
     result.add(tmp);
     result.add(tmp);
