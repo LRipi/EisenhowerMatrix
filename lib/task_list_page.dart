@@ -95,35 +95,30 @@ class TaskListPageState extends State<TaskListPage> {
         )
       ),
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          FlatButton(
-            onPressed: () {
-              // print("flkanjklfbjhgagbf,k");
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ExtractEditTaskPageArgument (),
-                  settings: RouteSettings(
-                    arguments: EditTaskPageArgument (
-                      task,
-                      false,
-                    ),
-                  )
-                )
-              );
-            },
-            child: Text(
-                'toto',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                )
-            ),
-          ),
-
-        ],
+      padding: EdgeInsets.all(10.0),
+      child: FlatButton(
+        padding: EdgeInsets.all(16.0),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ExtractEditTaskPageArgument (),
+              settings: RouteSettings(
+                arguments: EditTaskPageArgument (
+                  task,
+                  false,
+                ),
+              )
+            )
+          );
+        },
+        child: Text(
+          'toto',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+          )
+        ),
       ),
     );
   }
