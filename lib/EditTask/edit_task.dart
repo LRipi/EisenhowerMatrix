@@ -52,6 +52,26 @@ class EditTaskPageState extends State<EditTaskPage> {
   final _descriptionController = TextEditingController();
   final _titleController = TextEditingController();
 
+  void errorPopUp(String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error', style: TextStyle(color: Colors.red)),
+          content: Text(error, style: TextStyle(color: Colors.red)), 
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Close", style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ]
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _titleController.text = widget.title;
@@ -129,6 +149,8 @@ class EditTaskPageState extends State<EditTaskPage> {
                           else
                             ApiCalls.updateTask(widget.task);
                           Navigator.of(context).pop();
+                        } else {
+                          errorPopUp("Missing required fields. (title or description)");
                         }
 
                       },
