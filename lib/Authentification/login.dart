@@ -6,14 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'register.dart';
 
-class LoginPage extends StatelessWidget
-{
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
+class LoginPage extends StatefulWidget {
+  
   final VoidCallback onSignIn;
 
   LoginPage({@required this.onSignIn});
+  
+  @override
+  _LoginPageState createState() => _LoginPageState(onSignIn: onSignIn);
+}
+
+class _LoginPageState extends State<LoginPage>
+{
+  final VoidCallback onSignIn;
+
+  _LoginPageState({@required this.onSignIn});
+
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  void errorPopUp(String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error', style: TextStyle(color: Colors.red)),
+          content: Text(error, style: TextStyle(color: Colors.red)), 
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Close", style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ]
+        );
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +86,22 @@ class LoginPage extends StatelessWidget
                       if (_usernameController.text != '' && _passwordController.text != '') {
                         var response = await http.post(ApiCalls.baseUrl + 'users/login', body: {'login': _usernameController.text, 'password': _passwordController.text});
                         if (jsonDecode(response.body)['success'] == true) {
-                          print("should put new status to connected");
-                          print('user: ' + jsonDecode(response.body).toString());
                           Authentication.setAuthState(AuthState.connected);
                           Authentication.setJwtToken(jsonDecode(response.body)['user']['token']);
                           onSignIn();
                         } else {
-                          debugPrint('error: ' + response.statusCode.toString());
+                          switch (response.statusCode)
+                          {
+                            case 422:
+                              errorPopUp("Missing password or username.");
+                              break;
+                            case 401:
+                              errorPopUp(jsonDecode(response.body)['message']);
+                              break;
+                            default:
+                              errorPopUp("Unknown error during authentification.");
+                              break;
+                          }
                         }
                       }
                     },

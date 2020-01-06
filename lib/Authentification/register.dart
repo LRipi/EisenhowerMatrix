@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage>
           content: Text(error, style: TextStyle(color: Colors.red)), 
           actions: <Widget>[
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text("Close", style: TextStyle(color: Colors.red)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -66,6 +66,8 @@ class _RegisterPageState extends State<RegisterPage>
                       color: error ? Colors.red : Colors.grey
                     ),
                     icon: Icon(Icons.vpn_key, color: error ? Colors.red : Colors.grey),
+                    hoverColor: error ? Colors.red : Theme.of(context).primaryColor,
+                    fillColor: error ? Colors.red : Colors.grey,
                   ),
                   onChanged: (confirmPassword) {
                     if (_passwordcontroller.text != _passwordconfirmcontroller.text)
