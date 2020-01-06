@@ -115,7 +115,7 @@ class TaskListPageState extends State<TaskListPage> {
           );
         },
         child: Text(
-          'toto',
+          task.title,
           style: TextStyle(
             color: Colors.black,
             fontSize: 25,

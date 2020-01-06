@@ -28,7 +28,7 @@ class MatrixPageState extends State<MatrixPage> {
         Color.fromRGBO(204, 43, 94, 1), Color.fromRGBO(117, 58, 136, 1)
     );
     pasUrgentPasImportant = new TaskListInfo(
-        "Pas Urgent, PasImportant", false, false, 0,
+        "Pas Urgent, Pas Important", false, false, 0,
         Color.fromRGBO(33, 147, 176, 1), Color.fromRGBO(109, 213, 237, 1)
     );
     pasUrgentImportant = new TaskListInfo(
