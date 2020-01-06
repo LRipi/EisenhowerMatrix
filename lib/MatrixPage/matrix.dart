@@ -135,7 +135,9 @@ class ButtonState extends State<CategoryButton> {
   }
 
   void _getData() async {
-    await ApiCalls.updateAmountFromTaskLists(widget.taskList);
+    bool success = false;
+    while (!success)
+      success = await ApiCalls.updateAmountFromTaskLists(widget.taskList);
     setState(() {
       updating = true;
     });

@@ -8,15 +8,28 @@ import 'package:eisenhower_matrix/task_list_page.dart';
 class ApiCalls {
   static String baseUrl = 'http://vps.lemartret.com:3000/';
 
-  static Future<void> updateAmountFromTaskLists(TaskListInfo info) async {
-    info.tasks = await getTasksFromList(info);
-    info.amount = info.tasks.length;
-    print('computed amount for ' + info.important.toString() + ', ' + info.urgent.toString() + info.amount.toString());
+  static Future<bool> updateAmountFromTaskLists(TaskListInfo info) async {
+    String request = baseUrl + 'tasks/total?importance=' + info.important.toString() + '&urgence=' + info.urgent.toString();
+    print(request);
+    http.Response response = await http.get(request, headers: {
+      "x-access-token": Authentication.jwtToken
+    });
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200) {
+      var jsonDecoded = jsonDecode(response.body);
+      info.amount = jsonDecoded['number'];
+      return true;
+    }
+    else {
+      info.amount = -1;
+      return false;
+    }
   }
 
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
     List<Task> result = new List<Task> ();
-    http.Response response = await http.get(baseUrl + 'tasks', headers: {
+    http.Response response = await http.get(baseUrl + 'tasks?importance=' + listInfo.important.toString() + '&urgence=' + listInfo.urgent.toString() , headers: {
       "x-access-token": Authentication.jwtToken
     });
     if (jsonDecode(response.body)['success'] == true) {
@@ -49,12 +62,7 @@ class ApiCalls {
   }
 
   static void createTask(Task newTask) async {
-    print('should create: ' + newTask.title);
-    print('with desc: ' + newTask.description);
-    print('and codes: ' + newTask.urgency.toString() + ', ' + newTask.importance.toString());
-
     print(Authentication.jwtToken);
-
     http.Response response = await http.post(baseUrl + 'tasks/', headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
