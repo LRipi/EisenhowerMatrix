@@ -33,12 +33,14 @@ class EditTaskPage extends StatefulWidget {
 
   String title;
   String description;
+  String status;
 
   EditTaskPage ({@required this.task, this.isNew}) {
     emergency = task.urgency;
     importance = task.importance;
     title = task.title;
     description = task.description;
+    status = task.status;
   }
 
   @override
@@ -76,7 +78,6 @@ class EditTaskPageState extends State<EditTaskPage> {
   Widget build(BuildContext context) {
     _titleController.text = widget.title;
     _descriptionController.text = widget.description;
-    print('emergency and importance in build: ' + widget.emergency.toString() + ', ' + widget.importance.toString() );
     return Scaffold(
       drawer: CustomDrawer (
         onSignOut: null,
@@ -143,6 +144,8 @@ class EditTaskPageState extends State<EditTaskPage> {
                         Checkbox(
                           value: (widget.task.status == "close"),
                           onChanged: (bool v) => setState((){
+                            widget.title = _titleController.text;
+                            widget.description = _descriptionController.text;
                             widget.task.status = (v) ? "close" : "open";
                           }),
                         ),

@@ -127,13 +127,6 @@ class ButtonState extends State<CategoryButton> {
 
   bool updating = false;
 
-  void _test() async {
-    print('gona calculate amount');
-    updating = true;
-    await ApiCalls.updateAmountFromTaskLists(widget.taskList);
-    print('amount is: ' + widget.taskList.amount.toString());
-  }
-
   void _getData() async {
     bool success = false;
     while (!success)
