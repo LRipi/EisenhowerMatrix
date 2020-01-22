@@ -24,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage>
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error', style: TextStyle(color: Colors.red)),
-          content: Text(error, style: TextStyle(color: Colors.red)), 
+          content: Text(error, style: TextStyle(color: Colors.red)),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Close", style: TextStyle(color: Colors.red)),
@@ -87,7 +87,6 @@ class _RegisterPageState extends State<RegisterPage>
                     onPressed: () async {
                       if (_passwordcontroller.text == _passwordconfirmcontroller.text) {
                         var response = await http.post(ApiCalls.baseUrl + 'users/create', body: {'name': _usernamecontroller.text, 'login': _mailcontroller.text, 'password': _passwordcontroller.text});
-                        debugPrint('Status Code: ' + response.statusCode.toString() + '\nBody: ' + response.body.toString());
                         if (response.statusCode == 201)
                           Navigator.pop(
                             context,
@@ -141,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage>
   }
 }
 
-class RegisterTextField extends StatelessWidget 
+class RegisterTextField extends StatelessWidget
 {
   RegisterTextField({this.label, this.controller, this.obscureText, this.icon});
 
@@ -149,7 +148,7 @@ class RegisterTextField extends StatelessWidget
   final TextEditingController controller;
   final bool obscureText;
   final Icon icon;
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(

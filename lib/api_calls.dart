@@ -10,12 +10,9 @@ class ApiCalls {
 
   static Future<bool> updateAmountFromTaskLists(TaskListInfo info) async {
     String request = baseUrl + 'tasks/total?importance=' + info.important.toString() + '&urgence=' + info.urgent.toString();
-    print(request);
     http.Response response = await http.get(request, headers: {
       "x-access-token": Authentication.jwtToken
     });
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 200) {
       var jsonDecoded = jsonDecode(response.body);
       info.amount = jsonDecoded['number'];
@@ -28,7 +25,6 @@ class ApiCalls {
   }
 
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
-    print("GET LIST");
     List<Task> result = new List<Task> ();
     http.Response response = await http.get(baseUrl + 'tasks?importance=' + listInfo.important.toString() + '&urgence=' + listInfo.urgent.toString() , headers: {
       "x-access-token": Authentication.jwtToken
@@ -44,8 +40,6 @@ class ApiCalls {
         tmp.status = jsonDecode(response.body)['tasks'][i]['status'];
         result.add(tmp);
       }
-    } else {
-      print("FAILED");
     }
     return result;
   }
@@ -71,8 +65,7 @@ class ApiCalls {
   }
 
   static void createTask(Task newTask) async {
-    // print(Authentication.jwtToken);
-    http.Response response = await http.post(baseUrl + 'tasks/', headers: {
+    await http.post(baseUrl + 'tasks/', headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
       "urgence": newTask.urgency.toString(),
@@ -82,11 +75,10 @@ class ApiCalls {
       "deadline": newTask.deadline.toIso8601String(),
       "status": newTask.status,
     });
-    print(response.statusCode);
   }
 
   static void updateTask(Task task) async {
-    http.Response response = await http.put(baseUrl + 'tasks/' + task.id.toString(), headers: {
+    await http.put(baseUrl + 'tasks/' + task.id.toString(), headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
       "urgence": task.urgency.toString(),
@@ -96,11 +88,10 @@ class ApiCalls {
       "deadline": task.deadline.toIso8601String(),
       "status": task.status,
     });
-    print(response.statusCode);
   }
 
   static void deleteTask(Task task) async {
-    http.Response response = await http.delete(baseUrl + 'tasks/' + task.id.toString(), headers: {
+    await http.delete(baseUrl + 'tasks/' + task.id.toString(), headers: {
       "x-access-token": Authentication.jwtToken
     });
   }
