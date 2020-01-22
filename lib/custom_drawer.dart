@@ -1,4 +1,5 @@
 
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -61,10 +62,9 @@ class CustomDrawer extends StatelessWidget {
 
   Widget _eraseAllTasksButton(BuildContext context)
   {
-    bool validate = false;
 
-    bool validationPopUp() {
-    showDialog(
+    Future<String> validationPopUp() {
+    return showDialog<String> (
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -74,13 +74,13 @@ class CustomDrawer extends StatelessWidget {
             new FlatButton(
               child: new Text("Accept"),
               onPressed: () {
-                Navigator.of(context).pop(true);
+                Navigator.of(context).pop('success');
               },
             ),
             new FlatButton(
               child: new Text("Decline"),
               onPressed: () {
-                Navigator.of(context).pop(false);
+                Navigator.of(context).pop('failed');
               },
             )
           ]
@@ -106,13 +106,10 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   onPressed: () async {
-                    var test = await validationPopUp();
-                    print(test);
-                    if (test == true) {
+                    var value = await validationPopUp();
+                    if (value == 'success') {
+                      ApiCalls.eraseAllTasks();
                       Navigator.pop(context);
-                      if (onSignOut != null)
-                        onSignOut();
-                      Navigator.of(context).popUntil((route) => route.settings.name == "/");
                     }
                   },
                 ),
@@ -124,6 +121,33 @@ class CustomDrawer extends StatelessWidget {
 
   Widget _deleteAccountButton(BuildContext context)
   {
+
+  Future<String> validationPopUp() {
+    return showDialog<String> (
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Confirm your action:'), 
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Accept"),
+              onPressed: () {
+                Navigator.of(context).pop('success');
+              },
+            ),
+            new FlatButton(
+              child: new Text("Decline"),
+              onPressed: () {
+                Navigator.of(context).pop('failed');
+              },
+            )
+          ]
+        );
+      }
+    );
+  }
+
     return Container (
         child: Row(
             children: <Widget> [
@@ -140,13 +164,16 @@ class CustomDrawer extends StatelessWidget {
                         )
                     ),
                   ),
-                  onPressed: () {
-                  //TODO Authentication.eraseAccount();
-                    //Authentication.disconnect();
-                    Navigator.pop(context);
-                    if (onSignOut != null)
-                      onSignOut();
-                    Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                  onPressed: () async {
+                    var value = await validationPopUp();
+                    if (value == 'success') {
+                      ApiCalls.eraseAccount();
+                      Authentication.disconnect();
+                      Navigator.pop(context);
+                      if (onSignOut != null)
+                        onSignOut();
+                      Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                    }
                   },
                 ),
               ),
