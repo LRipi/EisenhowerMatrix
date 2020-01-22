@@ -61,6 +61,34 @@ class CustomDrawer extends StatelessWidget {
 
   Widget _eraseAllTasksButton(BuildContext context)
   {
+    bool validate = false;
+
+    bool validationPopUp() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Confirm your action:'), 
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Accept"),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            new FlatButton(
+              child: new Text("Decline"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ]
+        );
+      }
+    );
+  }
+
     return Container (
         child: Row(
             children: <Widget> [
@@ -77,13 +105,15 @@ class CustomDrawer extends StatelessWidget {
                         )
                     ),
                   ),
-                  onPressed: () {
-                    //TODO Erase all tasks
-                    //Authentication.disconnect();
-                    Navigator.pop(context);
-                    if (onSignOut != null)
-                      onSignOut();
-                    Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                  onPressed: () async {
+                    var test = await validationPopUp();
+                    print(test);
+                    if (test == true) {
+                      Navigator.pop(context);
+                      if (onSignOut != null)
+                        onSignOut();
+                      Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                    }
                   },
                 ),
               ),
