@@ -1,4 +1,5 @@
 
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -78,8 +79,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    //TODO Erase all tasks
-                    //Authentication.disconnect();
+                    ApiCalls.eraseAllTasks();
                     Navigator.pop(context);
                     if (onSignOut != null)
                       onSignOut();
@@ -111,8 +111,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                  //TODO Authentication.eraseAccount();
-                    //Authentication.disconnect();
+                    Authentication.eraseAccount();
                     Navigator.pop(context);
                     if (onSignOut != null)
                       onSignOut();

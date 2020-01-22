@@ -8,6 +8,12 @@ import 'package:eisenhower_matrix/task_list_page.dart';
 class ApiCalls {
   static String baseUrl = 'http://vps.lemartret.com:3000/';
 
+  static void eraseAccount() {
+    http.delete(baseUrl + 'users/', headers: {
+      "x-access-token": Authentication.jwtToken
+    });
+  }
+
   static Future<bool> updateAmountFromTaskLists(TaskListInfo info) async {
     String request = baseUrl + 'tasks/total?importance=' + info.important.toString() + '&urgence=' + info.urgent.toString();
     print(request);
@@ -25,6 +31,12 @@ class ApiCalls {
       info.amount = -1;
       return false;
     }
+  }
+
+  static Future<void> eraseAllTasks() async {
+    await http.delete(baseUrl + "tasks/all", headers: {
+      "x-access-token": Authentication.jwtToken
+    });
   }
 
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
