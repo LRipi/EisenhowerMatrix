@@ -167,6 +167,7 @@ class CustomDrawer extends StatelessWidget {
                   onPressed: () async {
                     var value = await validationPopUp();
                     if (value == 'success') {
+                      ApiCalls.eraseAllTasks();
                       ApiCalls.eraseAccount();
                       Authentication.disconnect();
                       Navigator.pop(context);
