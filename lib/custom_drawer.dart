@@ -111,7 +111,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Authentication.eraseAccount();
+                    ApiCalls.eraseAccount();
                     Navigator.pop(context);
                     if (onSignOut != null)
                       onSignOut();
