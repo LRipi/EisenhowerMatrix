@@ -5,4 +5,5 @@ class Task {
   int id = 0;
   int urgency = 1;
   int importance = 1;
+  String status = "open";
 }

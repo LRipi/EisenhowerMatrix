@@ -58,7 +58,7 @@ class EditTaskPageState extends State<EditTaskPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error', style: TextStyle(color: Colors.red)),
-          content: Text(error, style: TextStyle(color: Colors.red)), 
+          content: Text(error, style: TextStyle(color: Colors.red)),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Close", style: TextStyle(color: Colors.red)),
@@ -135,6 +135,18 @@ class EditTaskPageState extends State<EditTaskPage> {
                       max: 10,
                       min: 1,
                       label: widget.importance.toInt().toString(),
+                    ),
+                    Text('Done'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Checkbox(
+                          value: (widget.task.status == "close"),
+                          onChanged: (bool v) => setState((){
+                            widget.task.status = (v) ? "close" : "open";
+                          }),
+                        ),
+                      ],
                     ),
                     RaisedButton(
                       onPressed: () {

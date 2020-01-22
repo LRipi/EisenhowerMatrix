@@ -28,6 +28,7 @@ class ApiCalls {
   }
 
   static Future<List<Task>> getTasksFromList (TaskListInfo listInfo) async {
+    print("GET LIST");
     List<Task> result = new List<Task> ();
     http.Response response = await http.get(baseUrl + 'tasks?importance=' + listInfo.important.toString() + '&urgence=' + listInfo.urgent.toString() , headers: {
       "x-access-token": Authentication.jwtToken
@@ -35,11 +36,16 @@ class ApiCalls {
     if (jsonDecode(response.body)['success'] == true) {
       for (var i = 0; i < jsonDecode(response.body)['tasks'].length; i++) {
         Task tmp = new Task();
+        tmp.urgency = jsonDecode(response.body)['tasks'][i]['urgence'];
+        tmp.importance = jsonDecode(response.body)['tasks'][i]['importance'];
         tmp.title = jsonDecode(response.body)['tasks'][i]['title'];
         tmp.description = jsonDecode(response.body)['tasks'][i]['description'];
         tmp.id = jsonDecode(response.body)['tasks'][i]['id'];
+        tmp.status = jsonDecode(response.body)['tasks'][i]['status'];
         result.add(tmp);
       }
+    } else {
+      print("FAILED");
     }
     return result;
   }
@@ -52,9 +58,12 @@ class ApiCalls {
     if (jsonDecode(response.body)['success'] == true) {
       for (var i = 0; i < jsonDecode(response.body)['tasks'].length; i++) {
         Task tmp = new Task();
+        tmp.urgency = jsonDecode(response.body)['tasks'][i]['urgence'];
+        tmp.importance = jsonDecode(response.body)['tasks'][i]['importance'];
         tmp.title = jsonDecode(response.body)['tasks'][i]['title'];
         tmp.description = jsonDecode(response.body)['tasks'][i]['description'];
         tmp.id = jsonDecode(response.body)['tasks'][i]['id'];
+        tmp.status = jsonDecode(response.body)['tasks'][i]['status'];
         result.add(tmp);
       }
     }
@@ -62,7 +71,7 @@ class ApiCalls {
   }
 
   static void createTask(Task newTask) async {
-    print(Authentication.jwtToken);
+    // print(Authentication.jwtToken);
     http.Response response = await http.post(baseUrl + 'tasks/', headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
@@ -70,7 +79,8 @@ class ApiCalls {
       "importance": newTask.importance.toString(),
       "title": newTask.title,
       "description": newTask.description,
-      "deadline": newTask.deadline.toIso8601String()
+      "deadline": newTask.deadline.toIso8601String(),
+      "status": newTask.status,
     });
     print(response.statusCode);
   }
@@ -79,12 +89,14 @@ class ApiCalls {
     http.Response response = await http.put(baseUrl + 'tasks/' + task.id.toString(), headers: {
       "x-access-token": Authentication.jwtToken
     }, body: {
-      "urgence": task.urgency,
-      "importance": task.importance,
+      "urgence": task.urgency.toString(),
+      "importance": task.importance.toString(),
       "title": task.title,
       "description": task.description,
-      "deadline": task.deadline
+      "deadline": task.deadline.toIso8601String(),
+      "status": task.status,
     });
+    print(response.statusCode);
   }
 
   static void deleteTask(Task task) async {

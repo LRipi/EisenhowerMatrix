@@ -114,12 +114,19 @@ class TaskListPageState extends State<TaskListPage> {
             )
           );
         },
-        child: Text(
-          task.title,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 25,
-          )
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                task.title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                )
+              ),
+            ),
+            (task.status == "close") ? Icon(Icons.check) : Container()
+          ],
         ),
       ),
     );
