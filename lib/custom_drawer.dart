@@ -81,9 +81,6 @@ class CustomDrawer extends StatelessWidget {
                   onPressed: () {
                     ApiCalls.eraseAllTasks();
                     Navigator.pop(context);
-                    if (onSignOut != null)
-                      onSignOut();
-                    Navigator.of(context).popUntil((route) => route.settings.name == "/");
                   },
                 ),
               ),
@@ -112,6 +109,7 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   onPressed: () {
                     ApiCalls.eraseAccount();
+                    Authentication.disconnect();
                     Navigator.pop(context);
                     if (onSignOut != null)
                       onSignOut();
