@@ -1,4 +1,5 @@
 
+import 'package:eisenhower_matrix/api_calls.dart';
 import 'package:eisenhower_matrix/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class CustomDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget> [
               _disconnectButton(context),
+              _eraseAllTasksButton(context),
+              _deleteAccountButton(context),
             ]
           )
         )
@@ -28,32 +31,94 @@ class CustomDrawer extends StatelessWidget {
   Widget _disconnectButton(BuildContext context)
   {
     return Container (
-      child: Row(
-        children: <Widget> [
-          Expanded (
-            child: RaisedButton (
-              color: Colors.orange,
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
-                child: Text (
-                  'Se déconnecter',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                  )
+        child: Row(
+            children: <Widget> [
+              Expanded (
+                child: RaisedButton (
+                  color: Colors.orange,
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text (
+                        'Se déconnecter',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                        )
+                    ),
+                  ),
+                  onPressed: () {
+                    Authentication.disconnect();
+                    Navigator.pop(context);
+                    if (onSignOut != null)
+                      onSignOut();
+                    Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                  },
                 ),
               ),
-              onPressed: () {
-                Authentication.disconnect();
-                Navigator.pop(context);
-                if (onSignOut != null)
-                  onSignOut();
-                Navigator.of(context).popUntil((route) => route.settings.name == "/");
-              },
-            ),
-          ),
-        ]
-      )
+            ]
+        )
+    );
+  }
+
+  Widget _eraseAllTasksButton(BuildContext context)
+  {
+    return Container (
+        child: Row(
+            children: <Widget> [
+              Expanded (
+                child: RaisedButton (
+                  color: Colors.orange,
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text (
+                        'Erase All Tasks',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                        )
+                    ),
+                  ),
+                  onPressed: () {
+                    ApiCalls.eraseAllTasks();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ]
+        )
+    );
+  }
+
+  Widget _deleteAccountButton(BuildContext context)
+  {
+    return Container (
+        child: Row(
+            children: <Widget> [
+              Expanded (
+                child: RaisedButton (
+                  color: Colors.orange,
+                  child: Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text (
+                        'Delete Account',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                        )
+                    ),
+                  ),
+                  onPressed: () {
+                    ApiCalls.eraseAccount();
+                    Authentication.disconnect();
+                    Navigator.pop(context);
+                    if (onSignOut != null)
+                      onSignOut();
+                    Navigator.of(context).popUntil((route) => route.settings.name == "/");
+                  },
+                ),
+              ),
+            ]
+        )
     );
   }
 }
